@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .account-img {
+         height: 125px;
+         width: 125px;
+         margin-right: 20px;
+         margin-bottom: 16px;
+         }
+
+         .account-heading {
+          font-size: 2.5rem;
+          }
+    main{
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    }
+          .media {
+          display: flex;
+          left: 70px;
+          right: 150px;
+          }
+
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<header>
+    <nav class="navbar navbar-inverse">
+        <div class="container pt-3">
+            <a class="nav navbar-nav">
+            <img src="https://static.vecteezy.com/system/resources/previews/010/161/401/non_2x/red-fire-free-png.png"
+                 width="50" height="50" alt="">
+            </a>
+      <a class="navbar-brand" style="color:white;"> TopTier</a>
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('account') }}">Account</a></li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-in"></span> Logout </a></li>
+                {% else %}
+                <li><a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Sign Up </a></li>
+                <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-in"></span> Login </a></li>
+                {% endif %}
+                {% if current_user.id == 1 %}
+                <li><a href="{{ url_for('admin') }}"> Admin </a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+      <div class="media"  style="width: 35%; margin: auto; padding-top: 18px;">
+        <img class="rounded-circle account-img" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg">
+        <div class="media-body">
+          <h2>{{ current_user.username }}</h2>
+          <p>{{ current_user.email }}</p>
+        </div>
+      </div>
+            <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group  col-md-4"  style="margin: auto; float: none;">
+                <legend class="border-bottom mb-4">Account Info</legend>
+                <div class="form-group">
+                    {{ form.username.label(class="form-control-label") }}
+                    {% if form.username.errors %}
+                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.username(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {{ form.password(class="form-control form-control-lg") }}
+                </div>
+                <div class="form-group">
+                {{ form.submit(class="btn btn-danger") }}
+            </div>
+            </fieldset>
+        </form>
+    </main>
+</body>
+<footer class="bg-light text-center">
+  <!-- Copyright -->
+    <p style="border-top: 40px solid #202020; padding-bottom: 0px; margin: 0px;">  </p>
+  <div class="text-center p-3" style="background-color: #202020; height: 50px;">
+   <span style=" color: white;"> © 2022 Copyright:</span>
+    <a class="text-dark" href=" {{ url_for('index') }}">TopTier.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+</html>

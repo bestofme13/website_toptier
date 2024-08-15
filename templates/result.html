@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+    * {
+    box-sizing: border-box;
+    }
+    .both{
+    padding-top: 35px;
+    padding-left: 35px;
+    display: flex;
+    }
+    .plot{
+    padding-left: 40px;
+    padding-right: 200px;
+    padding-top: 30px;
+    color: white;
+    font-family: arial;
+    font-weight: 500;
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+    }
+    .trailer{
+    padding-right: 200px;
+    padding-left: 40px;
+    padding-top: 30px;
+    }
+    .table {
+    display: table;
+    padding: 6px;
+    color: white;
+    font-family: arial;
+    font-weight: 500;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+    }
+    .img{
+    float: left;
+    height: 355px;
+    border: 1px solid black;
+    box-shadow: 5px 10px 10px 5px black;
+    width: 250px;
+    margin: 0 50px 5px 0;
+    }
+    .gold {
+    color: #8f95a3;
+    font-family: arial;
+    font-weight: 300;
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+    }
+    html {
+    background-color: #080808;
+    }
+    main {
+    display:flex;
+    background-color: #080808;
+    justify-content: center;
+    padding: 30px 140px 10px 200px;
+    }
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+      <header>
+          <nav class="navbar navbar-inverse" style="margin-bottom: 0;">
+              <div class="container pt-2">
+                  <a class="nav navbar-nav">
+                      <img src="https://static.vecteezy.com/system/resources/previews/010/161/401/non_2x/red-fire-free-png.png"
+                 width="50" height="50" alt="">
+                  </a>
+                  <a class="navbar-brand" style="color:white;"> TopTier</a>
+                  <ul class="nav navbar-nav">
+                      <li><a href="{{ url_for('index') }}">Home</a></li>
+                      {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('account') }}">Account</a></li>
+                {% endif %}
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                      {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-in"></span> Logout </a></li>
+              {% else %}
+                <li><a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Sign Up </a></li>
+                <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-in"></span> Login </a></li>
+              {% endif %}
+                  </ul>
+              </div>
+          </nav>
+      </header>
+      <main>
+          <div class="gold">
+                <div class="speedbar">
+                    <span id="dle-speedbar">
+                        <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                            <a href="{{ url_for('index') }}" itemprop="url" style="color: darkgoldenrod">
+                                <span itemprop="title">Home</span></a></span> »
+                        </span> {{ title }} </span>
+                </div>
+          </div>
+          <div>
+              <h2 style="color: darkgoldenrod; font-size: 35px; font-weight: 400;"> {{ title }} ({{ year }}) </h2>
+          </div>
+          <div class="both">
+              <img src="{{ poster }}" class="img">
+              <div class="table">
+                  <p> Title:  {{ title }}</p>
+                  <p> Released: {{ released }}</p>
+                  <p> Genre: {{ genre }}</p>
+                  <p> Director: {{ director }}</p>
+                  <p> Actors: {{ actors }}</p>
+                  <p> Runtime: {{ runtime }}</p>
+                  <p> IMDb Rating: {{ imdbrating }}</p>
+                  <p> Box Office: {{ boxoffice }}</p>
+
+                  <button class="btn btn-danger" id="addRow" onclick="addField('{{ title }}', 'current.user.id');"> Add to Watchlist </button>
+              </div>
+          </div>
+          <div class="plot">
+              <h3 style="color: darkgoldenrod; font-size: 25px; font-weight: 400;"> Plot </h3>
+              <p style="border-bottom: 3px solid darkgoldenrod; padding-bottom: 8px;">  </p>
+                  <p> {{ plot }} </p>
+          </div>
+          <div class="trailer">
+              <h3 style="color: darkgoldenrod; font-size: 25px; font-weight: 400;"> Trailer </h3>
+              <p style="border-bottom: 3px solid darkgoldenrod; padding-bottom: 8px;">  </p>
+          </div>
+          <div style="padding-top: 15px; padding-left: 70px; padding-bottom: 70px;">
+              <iframe allowfullscreen="allowfullscreen" style="border:1px solid black; box-shadow: 5px 10px 10px 5px black;" width="600" height="345" src="https://www.youtube.com/embed/{{ trailer }}?controls=0">
+              </iframe>
+          </div>
+           </main>
+
+</body>
+<footer class="bg-light text-center">
+  <!-- Copyright -->
+    <p style="border-top: 40px solid #202020; padding-bottom: 0px; margin: 0px;">  </p>
+  <div class="text-center p-3" style="background-color: #202020; height: 50px;">
+   <span style=" color: white;"> © 2022 Copyright:</span>
+    <a class="text-dark" href=" {{ url_for('index') }}">TopTier.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+</html>
